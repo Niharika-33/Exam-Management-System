@@ -10,6 +10,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/reval")
 public class RevealRequestController {
+
     @Autowired
     private RevealRequestService revealRequestService;
 
@@ -19,12 +20,13 @@ public class RevealRequestController {
     }
 
     @GetMapping("/status/{id}")
-    public Optional<RevealRequest> checkStatus(@PathVariable String id) {
+    public Optional<RevealRequest> checkStatus(@PathVariable Long id) {
         return revealRequestService.fetchStatus(id);
     }
 
     @PutMapping("/status/{id}")
-    public RevealRequest updateStatus(@PathVariable String id, @RequestParam String status) {
+    public RevealRequest updateStatus(@PathVariable Long id, @RequestParam String status) {
         return revealRequestService.updateStatusInDb(id, status);
     }
 }
+

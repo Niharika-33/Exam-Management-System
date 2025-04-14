@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class Issue {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String issueID;
 
     private String studentId;

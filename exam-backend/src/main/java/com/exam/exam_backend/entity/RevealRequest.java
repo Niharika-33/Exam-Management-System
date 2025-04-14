@@ -1,38 +1,58 @@
 package com.exam.exam_backend.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class RevealRequest {
 
     @Id
-    private String requestID;
-    private String status;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long requestID;
+
+    private String studentId;
+    private String revalDescription;
+    private String status = "PENDING"; // Default
 
     public RevealRequest() {}
 
-    public RevealRequest(String requestID, String status) {
+    public RevealRequest(Long requestID, String studentId, String revalDescription, String status) {
         this.requestID = requestID;
+        this.studentId = studentId;
+        this.revalDescription = revalDescription;
         this.status = status;
     }
 
-    // Getter for requestID
-    public String getRequestID() {
+    public Long getRequestID() {
         return requestID;
     }
 
-    // Setter for requestID
-    public void setRequestID(String requestID) {
+    public void setRequestID(Long requestID) {
         this.requestID = requestID;
     }
 
-    // Getter for status
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getRevalDescription() {
+        return revalDescription;
+    }
+
+    public void setRevalDescription(String revalDescription) {
+        this.revalDescription = revalDescription;
+    }
+
     public String getStatus() {
         return status;
     }
 
-    // Setter for status
     public void setStatus(String status) {
         this.status = status;
     }
