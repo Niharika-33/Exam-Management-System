@@ -12,7 +12,7 @@ public class Exam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long examID;
     private String examType; // "Mid", "CLA", "End Sem"
-    private String subject;
+    private String subjectcode;
     private String syllabusDetails;
     private Integer totalMarks;
     private String testDate; // Only for "CLA" (Class Test)
@@ -22,7 +22,7 @@ public class Exam {
 
     public Exam(String examType, String subject, String syllabusDetails, Integer totalMarks, String testDate) {
         this.examType = examType;
-        this.subject = subject;
+        this.subjectcode = subject;
         this.syllabusDetails = syllabusDetails;
         this.totalMarks = totalMarks;
         this.testDate = testDate;
@@ -46,11 +46,11 @@ public class Exam {
     }
 
     public String getSubject() {
-        return subject;
+        return subjectcode;
     }
 
     public void setSubject(String subject) {
-        this.subject = subject;
+        this.subjectcode= subject;
     }
 
     public String getSyllabusDetails() {

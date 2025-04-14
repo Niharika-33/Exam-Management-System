@@ -1,22 +1,70 @@
 package com.exam.exam_backend.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.time.LocalDateTime;
 
 @Entity
 public class Issue {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String issueID;
+
+    private String studentId;
+    private String subjectCode;
     private String description;
+    private LocalDateTime timestamp = LocalDateTime.now();
 
     public Issue() {}
 
-    public Issue(String issueID, String description) {
+    public Issue(String studentId, String subjectCode, String description) {
+        this.studentId = studentId;
+        this.subjectCode = subjectCode;
+        this.description = description;
+        this.timestamp = LocalDateTime.now();
+    }
+
+    public String getIssueID() {
+        return issueID;
+    }
+
+    public void setIssueID(String issueID) {
         this.issueID = issueID;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getSubjectCode() {
+        return subjectCode;
+    }
+
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    // Getters and Setters
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
 }
