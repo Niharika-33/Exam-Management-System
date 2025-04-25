@@ -1,5 +1,5 @@
 package com.exam.exam_backend.controller;
-
+import java.util.List;
 import com.exam.exam_backend.entity.RevealRequest;
 import com.exam.exam_backend.service.RevealRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,12 @@ public class RevealRequestController {
     public RevealRequest submitRequest(@RequestBody RevealRequest request) {
         return revealRequestService.storeRequestInDb(request);
     }
-
-    @GetMapping("/status/{id}")
-    public Optional<RevealRequest> checkStatus(@PathVariable Long id) {
-        return revealRequestService.fetchStatus(id);
+    
+    @GetMapping("/all")
+    public List<RevealRequest> getAllRequests() {
+        // This will return each object with studentId, requestDate, status, etc.
+        return revealRequestService.fetchAllRequests();
     }
-
     @PutMapping("/status/{id}")
     public RevealRequest updateStatus(@PathVariable Long id, @RequestParam String status) {
         return revealRequestService.updateStatusInDb(id, status);
