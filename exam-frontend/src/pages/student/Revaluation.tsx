@@ -59,33 +59,38 @@ const Revaluation = () => {
   });
 
   // Backend API base URL (adjust as needed)
-  const API_map = "http://localhost:8080/reval";
   const API_post = "http://localhost:8080/reval/submit";
   const API_get = "http://localhost:8080/reval/all";
+
   // Fetch revaluation requests when component mounts
+  const fetchRequests = async () => {
+    try {
+      const response = await axios.get(API_get);
+      // Map backend data to frontend format
+      const mappedRequests: RevaluationRequest[] = response.data.map(
+        (req: any) => ({
+          id: req.requestID.toString(),
+          subject: `Student ID: ${req.studentId}`,
+          date: new Date(req.requestDate).toLocaleDateString(),
+          status: req.status,
+          result: req.result,
+          comments: req.revalDescription, // Assuming reason is stored as comments
+        })
+      );
+      setRequests(mappedRequests);
+    } catch (error) {
+      console.error("Error fetching revaluation requests:", error);
+      toast.error("Failed to fetch revaluation requests");
+    }
+  };
+
   useEffect(() => {
-    const fetchRequests = async () => {
-      try {
-        const response = await axios.get(API_map);
-        // Map backend data to frontend format
-        const mappedRequests: RevaluationRequest[] = response.data.map(
-          (req: any) => ({
-            id: req.requestID.toString(),
-            subject: `Student ID: ${req.studentId}`,
-            date: new Date(req.requestDate).toLocaleDateString(),
-            status: req.status,
-            result: req.result,
-            comments: req.revalDescription, // Assuming reason is stored as comments
-          })
-        );
-        setRequests(mappedRequests);
-      } catch (error) {
-        console.error("Error fetching revaluation requests:", error);
-        toast.error("Failed to fetch revaluation requests");
-      }
-    };
-    fetchRequests();
-  }, []); // Empty dependency array to run once on mount
+    fetchRequests(); // Fetch requests once when the component mounts
+
+    // Optional: Add polling to refresh the data periodically
+    const interval = setInterval(fetchRequests, 5000); // Refresh every 5 seconds
+    return () => clearInterval(interval); // Clear interval on component unmount
+  }, []);
 
   const onSubmit = async (data: RevaluationFormValues) => {
     try {
@@ -142,6 +147,24 @@ const Revaluation = () => {
       toast.info(`Request Details for ${request.subject}`, {
         description: request.comments || "No additional details available",
       });
+    }
+  };
+
+  const updateRequestStatus = async (id: string, status: string) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/reval/status/${id}`,
+        null,
+        { params: { status } }
+      );
+      if (response.data) {
+        // After status update, refetch the requests
+        fetchRequests();
+        toast.success("Request status updated successfully");
+      }
+    } catch (error) {
+      console.error("Error updating request status:", error);
+      toast.error("Failed to update request status");
     }
   };
 
@@ -212,7 +235,7 @@ const Revaluation = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Revaluation Status</CardTitle>
+              <CardTitle>Check Status</CardTitle>
               <CardDescription>
                 Track the status of your revaluation requests
               </CardDescription>
@@ -224,6 +247,7 @@ const Revaluation = () => {
                     <TableHead>Student ID</TableHead>
                     <TableHead>Date</TableHead>
                     <TableHead>Status</TableHead>
+                    {/* <TableHead>Action</TableHead> */}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -232,6 +256,28 @@ const Revaluation = () => {
                       <TableCell>{request.subject}</TableCell>
                       <TableCell>{request.date}</TableCell>
                       <TableCell>{getStatusBadge(request.status)}</TableCell>
+                      <TableCell>
+                        {request.status === "Pending" && (
+                          <Button
+                            onClick={() =>
+                              updateRequestStatus(request.id, "Approved")
+                            }
+                            className="bg-green-500 text-white"
+                          >
+                            Approve
+                          </Button>
+                        )}
+                        {request.status === "Pending" && (
+                          <Button
+                            onClick={() =>
+                              updateRequestStatus(request.id, "Rejected")
+                            }
+                            className="bg-red-500 text-white"
+                          >
+                            Reject
+                          </Button>
+                        )}
+                      </TableCell>
                     </TableRow>
                   ))}
                   {requests.length === 0 && (
