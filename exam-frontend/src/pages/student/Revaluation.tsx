@@ -59,13 +59,14 @@ const Revaluation = () => {
   });
 
   // Backend API base URL (adjust as needed)
-  const API_BASE_URL = "http://localhost:8080/reval";
-
+  const API_map = "http://localhost:8080/reval";
+  const API_post = "http://localhost:8080/reval/submit";
+  const API_get = "http://localhost:8080/reval/all";
   // Fetch revaluation requests when component mounts
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await axios.get(API_BASE_URL);
+        const response = await axios.get(API_map);
         // Map backend data to frontend format
         const mappedRequests: RevaluationRequest[] = response.data.map(
           (req: any) => ({
@@ -89,7 +90,7 @@ const Revaluation = () => {
   const onSubmit = async (data: RevaluationFormValues) => {
     try {
       // Send POST request to backend
-      const response = await axios.post(API_BASE_URL, {
+      const response = await axios.post(API_post, {
         studentId: data.studentId,
         revalDescription: data.reason,
       });
@@ -151,7 +152,9 @@ const Revaluation = () => {
       </Helmet>
 
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold tracking-tight">Revaluation Requests</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Revaluation Requests
+        </h1>
 
         <div className="grid gap-6 md:grid-cols-2">
           <Card>
@@ -171,7 +174,10 @@ const Revaluation = () => {
                       <FormItem className="space-y-2">
                         <FormLabel>Student ID</FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter your Student ID" {...field} />
+                          <Input
+                            placeholder="Enter your Student ID"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

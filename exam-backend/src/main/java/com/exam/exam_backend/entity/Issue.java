@@ -12,7 +12,7 @@ public class Issue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String issueID;
+    private Long issueID;
 
     private String studentId;
     private String subjectCode;
@@ -28,11 +28,11 @@ public class Issue {
         this.timestamp = LocalDateTime.now();
     }
 
-    public String getIssueID() {
+    public Long getIssueID() {
         return issueID;
     }
 
-    public void setIssueID(String issueID) {
+    public void setIssueID(Long issueID) {
         this.issueID = issueID;
     }
 
