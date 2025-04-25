@@ -1,5 +1,4 @@
 package com.exam.exam_backend.entity;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
@@ -11,13 +10,13 @@ public class User {
 
     @Id
     private String userID;
-    private String password;
+    private int password;
     private String name;
     private String email;
 
     public User() {}
 
-    public User(String userID, String password, String name, String email) {
+    public User(String userID, int password, String name, String email) {
         this.userID = userID;
         this.password = password;
         this.name = name;
@@ -33,11 +32,11 @@ public class User {
         this.userID = userID;
     }
 
-    public String getPassword() {
+    public int getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(int password) {
         this.password = password;
     }
 

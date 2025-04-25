@@ -12,7 +12,7 @@ public class Student extends User {
 
     public Student() {}
 
-    public Student(String userID, String password, String name, String email, int year, String department) {
+    public Student(String userID, int password, String name, String email, int year, String department) {
         super(userID, password, name, email);
         this.year = year;
         this.department = department;

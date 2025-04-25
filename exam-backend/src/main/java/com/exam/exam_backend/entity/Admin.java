@@ -9,7 +9,7 @@ public class Admin extends User {
 
     public Admin() {}
 
-    public Admin(String userID, String password, String name, String email) {
+    public Admin(String userID, int password, String name, String email) {
         super(userID, password, name, email);
     }
 
@@ -22,11 +22,11 @@ public class Admin extends User {
         super.setUserID(userID);
     }
 
-    public String getPassword() {
+    public int getPassword() {
         return super.getPassword();
     }
 
-    public void setPassword(String password) {
+    public void setPassword(int password) {
         super.setPassword(password);
     }
 

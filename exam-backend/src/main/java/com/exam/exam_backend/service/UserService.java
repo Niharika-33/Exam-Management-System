@@ -31,7 +31,7 @@ public class UserService {
         // Check in User table
         if (userRepository.existsById(user.getUserID())) {
             User existingUser = userRepository.findById(user.getUserID()).get();
-            if (existingUser.getPassword().equals(user.getPassword())) {
+            if (existingUser.getPassword()==(user.getPassword())) {
                 return true; // Valid login for User
             }
         }
@@ -39,7 +39,7 @@ public class UserService {
         // Check in Student table
         if (studentRepository.existsById(user.getUserID())) {
             Student student = studentRepository.findById(user.getUserID()).get();
-            if (student.getPassword().equals(user.getPassword())) {
+            if (student.getPassword()==(user.getPassword())) {
                 return true; // Valid login for Student
             }
         }
@@ -47,7 +47,7 @@ public class UserService {
         // Check in Faculty table
         if (facultyRepository.existsById(user.getUserID())) {
             Faculty faculty = facultyRepository.findById(user.getUserID()).get();
-            if (faculty.getPassword().equals(user.getPassword())) {
+            if (faculty.getPassword()==(user.getPassword())) {
                 return true; // Valid login for Faculty
             }
         }
@@ -55,7 +55,7 @@ public class UserService {
         // Check in Admin table
         if (adminRepository.existsById(user.getUserID())) {
             Admin admin = adminRepository.findById(user.getUserID()).get();
-            if (admin.getPassword().equals(user.getPassword())) {
+            if (admin.getPassword()==(user.getPassword())) {
                 return true; // Valid login for Admin
             }
         }
