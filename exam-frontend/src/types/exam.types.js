@@ -9,7 +9,7 @@
  * @property {string} time - Exam time
  * @property {string} venue - Exam location
  * @property {string} status - Status of the exam (Upcoming or Completed)
- * @property {string} [result] - Optional, only for completed exams
+ * @property {string} result - Optional, only for completed exams
  */
 
 /**
