@@ -1,5 +1,4 @@
-// Student->revaluation
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // Added useEffect for fetching data
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,6 +31,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import axios from "axios"; // Added axios for API calls
 
 // Define types for the revaluation request form
 interface RevaluationFormValues {
@@ -42,7 +42,7 @@ interface RevaluationFormValues {
 // Define types for revaluation request status
 interface RevaluationRequest {
   id: string;
-  subject: string; // Reused for studentId display
+  subject: string; // Maps to studentId for display
   date: string;
   status: "Pending" | "Approved" | "Rejected";
   result?: string;
@@ -51,7 +51,6 @@ interface RevaluationRequest {
 
 const Revaluation = () => {
   const [requests, setRequests] = useState<RevaluationRequest[]>([]);
-
   const form = useForm<RevaluationFormValues>({
     defaultValues: {
       studentId: "",
@@ -59,19 +58,56 @@ const Revaluation = () => {
     },
   });
 
-  const onSubmit = (data: RevaluationFormValues) => {
-    const newRequest: RevaluationRequest = {
-      id: (requests.length + 1).toString(),
-      subject: `Student ID: ${data.studentId}`,
-      date: new Date().toLocaleDateString(),
-      status: "Pending",
+  // Backend API base URL (adjust as needed)
+  const API_BASE_URL = "http://localhost:8080/reval";
+
+  // Fetch revaluation requests when component mounts
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const response = await axios.get(API_BASE_URL);
+        // Map backend data to frontend format
+        const mappedRequests: RevaluationRequest[] = response.data.map(
+          (req: any) => ({
+            id: req.requestID.toString(),
+            subject: `Student ID: ${req.studentId}`,
+            date: new Date(req.requestDate).toLocaleDateString(),
+            status: req.status,
+            result: req.result,
+            comments: req.revalDescription, // Assuming reason is stored as comments
+          })
+        );
+        setRequests(mappedRequests);
+      } catch (error) {
+        console.error("Error fetching revaluation requests:", error);
+        toast.error("Failed to fetch revaluation requests");
+      }
     };
+    fetchRequests();
+  }, []); // Empty dependency array to run once on mount
 
-    setRequests([newRequest, ...requests]);
-
-    toast.success("Revaluation request submitted successfully");
-
-    form.reset();
+  const onSubmit = async (data: RevaluationFormValues) => {
+    try {
+      // Send POST request to backend
+      const response = await axios.post(API_BASE_URL, {
+        studentId: data.studentId,
+        revalDescription: data.reason,
+      });
+      // Create new request object from response
+      const newRequest: RevaluationRequest = {
+        id: response.data.requestID.toString(),
+        subject: `Student ID: ${data.studentId}`,
+        date: new Date(response.data.requestDate).toLocaleDateString(),
+        status: response.data.status,
+        comments: response.data.revalDescription,
+      };
+      setRequests([newRequest, ...requests]);
+      toast.success("Revaluation request submitted successfully");
+      form.reset();
+    } catch (error) {
+      console.error("Error submitting revaluation request:", error);
+      toast.error("Failed to submit revaluation request");
+    }
   };
 
   const getStatusBadge = (status: string) => {
@@ -141,7 +177,6 @@ const Revaluation = () => {
                       </FormItem>
                     )}
                   />
-
                   <FormField
                     control={form.control}
                     name="reason"
@@ -183,7 +218,6 @@ const Revaluation = () => {
                     <TableHead>Student ID</TableHead>
                     <TableHead>Date</TableHead>
                     <TableHead>Status</TableHead>
-                    
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -192,14 +226,14 @@ const Revaluation = () => {
                       <TableCell>{request.subject}</TableCell>
                       <TableCell>{request.date}</TableCell>
                       <TableCell>{getStatusBadge(request.status)}</TableCell>
-                      <TableCell className="text-right">
-                        
-                      </TableCell>
                     </TableRow>
                   ))}
                   {requests.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={4} className="text-center py-4 text-muted-foreground">
+                      <TableCell
+                        colSpan={4}
+                        className="text-center py-4 text-muted-foreground"
+                      >
                         No revaluation requests found.
                       </TableCell>
                     </TableRow>
