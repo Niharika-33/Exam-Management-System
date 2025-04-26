@@ -1,11 +1,8 @@
 package com.exam.exam_backend.entity;
+
 import java.time.LocalDate;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
+
+import jakarta.persistence.*;
 
 @Entity
 public class RevealRequest {
@@ -16,16 +13,23 @@ public class RevealRequest {
 
     private String studentId;
     private String revalDescription;
-    private String status = "PENDING"; // Default
+    private String status = "PENDING"; // Default status
+
     @Column(nullable = false, updatable = false)
     private LocalDate requestDate;
 
     public RevealRequest() {}
 
     public RevealRequest(Long requestID, String studentId, String revalDescription, String status) {
+        this.requestID = requestID;
         this.studentId = studentId;
         this.revalDescription = revalDescription;
         this.status = status;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.requestDate = LocalDate.now();
     }
 
     public Long getRequestID() {
@@ -59,16 +63,12 @@ public class RevealRequest {
     public void setStatus(String status) {
         this.status = status;
     }
-    @PrePersist
-    protected void onCreate() {
-        this.requestDate = LocalDate.now();
-    }
-    
+
     public LocalDate getRequestDate() {
         return requestDate;
     }
 
-     public void setRequestDate(LocalDate requestDate) {
+    public void setRequestDate(LocalDate requestDate) {
         this.requestDate = requestDate;
     }
 }

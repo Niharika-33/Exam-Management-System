@@ -1,11 +1,12 @@
 package com.exam.exam_backend.service;
+
 import java.util.List;
 
 import com.exam.exam_backend.entity.RevealRequest;
 import com.exam.exam_backend.repository.RevealRequestRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class RevealRequestService {
@@ -13,7 +14,6 @@ public class RevealRequestService {
     @Autowired
     private RevealRequestRepository revealRequestRepository;
 
-    // Store the reevaluation request in DB
     public RevealRequest storeRequestInDb(RevealRequest request) {
         return revealRequestRepository.save(request);
     }
@@ -22,7 +22,6 @@ public class RevealRequestService {
         return revealRequestRepository.findAll();
     }
 
-    // Update the status of the reevaluation request
     public RevealRequest updateStatusInDb(Long requestId, String status) {
         RevealRequest req = revealRequestRepository.findById(requestId).orElse(null);
         if (req != null) {
