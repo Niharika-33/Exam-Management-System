@@ -49,8 +49,8 @@ public class Exam {
         return subjectcode;
     }
 
-    public void setSubject(String subject) {
-        this.subjectcode= subject;
+    public void setSubject(String subjectcode) {
+        this.subjectcode= subjectcode;
     }
 
     public String getSyllabusDetails() {
