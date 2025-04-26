@@ -1,3 +1,4 @@
+
 package com.exam.exam_backend.entity;
 
 import jakarta.persistence.Entity;
