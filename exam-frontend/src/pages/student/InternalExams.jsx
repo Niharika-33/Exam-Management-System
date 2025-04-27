@@ -14,7 +14,7 @@ const InternalExams = () => {
     handleViewSyllabus,
     handleViewDetails,
     handleViewAnswerKey,
-    getExamList
+    getExamList,
   } = useInternalExams();
 
   return (
@@ -22,7 +22,7 @@ const InternalExams = () => {
       <Helmet>
         <title>Internal Exams</title>
       </Helmet>
-      
+
       <div className="space-y-6">
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-bold tracking-tight">Internal Exams</h1>
@@ -30,20 +30,18 @@ const InternalExams = () => {
             View your mid-semester examinations and class tests
           </p>
         </div>
-        
-        <Tabs defaultValue="mid-semester" value={activeTab} onValueChange={setActiveTab}>
+
+        <Tabs
+          defaultValue="mid-semester"
+          value={activeTab}
+          onValueChange={setActiveTab}
+        >
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="mid-semester">Mid-Semester Exams</TabsTrigger>
             <TabsTrigger value="class-test">Class Tests (CLAS)</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="mid-semester" className="space-y-4 mt-6">
-            <QuickActionCards 
-              examType="mid-semester"
-              onViewSyllabus={handleViewSyllabus}
-              onViewDetails={handleViewDetails}
-            />
-            
             <ExamList
               title="Mid-Semester Examinations"
               description="View your upcoming and past mid-semester examinations"
@@ -53,14 +51,8 @@ const InternalExams = () => {
               onViewSyllabus={handleViewSyllabus}
             />
           </TabsContent>
-          
+
           <TabsContent value="class-test" className="space-y-4 mt-6">
-            <QuickActionCards 
-              examType="class-test"
-              onViewSyllabus={handleViewSyllabus}
-              onViewDetails={handleViewDetails}
-            />
-            
             <ExamList
               title="CLAS Test Schedule"
               description="View your upcoming and past class tests"
@@ -104,7 +96,7 @@ export default InternalExams;
 //       <Helmet>
 //         <title>Internal Exams</title>
 //       </Helmet>
-      
+
 //       <div className="space-y-6">
 //         <div className="flex flex-col gap-2">
 //           <h1 className="text-3xl font-bold tracking-tight">Internal Exams</h1>
@@ -112,21 +104,21 @@ export default InternalExams;
 //             View your mid-semester examinations and class tests
 //           </p>
 //         </div>
-        
+
 //         <Tabs defaultValue="mid-semester" value={activeTab} onValueChange={setActiveTab}>
 //           <TabsList className="grid w-full grid-cols-2">
 //             <TabsTrigger value="mid-semester">Mid-Semester Exams</TabsTrigger>
 //             <TabsTrigger value="class-test">Class Tests (CLAS)</TabsTrigger>
 //           </TabsList>
-          
+
 //           <TabsContent value="mid-semester" className="space-y-4 mt-6">
-//             <QuickActionCards 
+//             <QuickActionCards
 //               examType="mid-semester"
 //               onViewSyllabus={handleViewSyllabus}
 //               onViewDetails={handleViewDetails}
 //               onViewResults={handleViewResults}
 //             />
-            
+
 //             <ExamList
 //               title="Mid-Semester Examinations"
 //               description="View your upcoming and past mid-semester examinations"
@@ -137,15 +129,15 @@ export default InternalExams;
 //               onViewResults={handleViewResults}
 //             />
 //           </TabsContent>
-          
+
 //           <TabsContent value="class-test" className="space-y-4 mt-6">
-//             <QuickActionCards 
+//             <QuickActionCards
 //               examType="class-test"
 //               onViewSyllabus={handleViewSyllabus}
 //               onViewDetails={handleViewDetails}
 //               onViewResults={handleViewResults}
 //             />
-            
+
 //             <ExamList
 //               title="CLAS Test Schedule"
 //               description="View your upcoming and past class tests"

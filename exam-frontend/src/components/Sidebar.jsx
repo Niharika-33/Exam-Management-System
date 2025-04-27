@@ -1,21 +1,19 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
 import {
-  BookOpen, 
-  ClipboardList, 
-  File, 
-  GraduationCap, 
-  Calendar, 
-  Users, 
-  RefreshCw, 
+  BookOpen,
+  ClipboardList,
+  File,
+  GraduationCap,
+  Calendar,
+  Users,
+  RefreshCw,
   Settings,
   Home,
-  ChevronRight
+  ChevronRight,
 } from "lucide-react";
-
 
 // Sidebar Context
 const SidebarContext = createContext(undefined);
@@ -46,7 +44,7 @@ const Sidebar = () => {
   const { isOpen, toggleSidebar } = useSidebar();
   const { user } = useAuth();
   const [isHovering, setIsHovering] = useState(false);
-  
+
   // Define navigation items based on user role
   const studentNavItems = [
     {
@@ -68,7 +66,11 @@ const Sidebar = () => {
         { to: "/dashboard", icon: Home, label: "Dashboard" },
         { to: "/publish-syllabus", icon: BookOpen, label: "Publish Syllabus" },
         // { to: "/clas-tests", icon: ClipboardList, label: "Class Tests (CLAS)" },
-        { to: "/publish-results", icon: GraduationCap, label: "Publish Results" },
+        {
+          to: "/publish-results",
+          icon: GraduationCap,
+          label: "Publish Results",
+        },
       ],
     },
   ];
@@ -80,9 +82,17 @@ const Sidebar = () => {
         { to: "/dashboard", icon: Home, label: "Dashboard" },
         { to: "/date-sheet", icon: Calendar, label: "Date Sheet" },
         { to: "/seating", icon: Users, label: "Seating Arrangement" },
-        { to: "/published-results", icon: GraduationCap, label: "Published Results" },
+        {
+          to: "/published-results",
+          icon: GraduationCap,
+          label: "Published Results",
+        },
         { to: "/issues", icon: File, label: "Issues" },
-        { to: "/revaluation-requests", icon: RefreshCw, label: "Revaluation Requests" },
+        {
+          to: "/revaluation-requests",
+          icon: RefreshCw,
+          label: "Revaluation Requests",
+        },
         // { to: "/settings", icon: Settings, label: "Settings" },
       ],
     },
@@ -90,7 +100,7 @@ const Sidebar = () => {
 
   // Determine which navigation items to display based on user role
   let navGroups = [];
-  
+
   if (user) {
     switch (user.role) {
       case "student":
@@ -109,7 +119,7 @@ const Sidebar = () => {
 
   // Sidebar trigger tab shown when sidebar is hidden
   const SidebarTrigger = () => (
-    <div 
+    <div
       className="fixed top-20 left-0 z-50 bg-primary/90 text-primary-foreground px-2 py-3 rounded-r-lg shadow-md flex items-center transform transition-transform duration-300 ease-in-out hover:scale-105 cursor-pointer"
       onClick={toggleSidebar}
     >
@@ -127,7 +137,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div 
+    <div
       className="relative h-full z-50"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -135,11 +145,13 @@ const Sidebar = () => {
       <aside
         className={cn(
           "fixed inset-y-0 left-0 z-50 h-full w-64 bg-sidebar border-r border-border transition-all duration-300 ease-in-out shadow-elegant",
-          (isHovering || isOpen) ? "translate-x-0" : "-translate-x-60"
+          isHovering || isOpen ? "translate-x-0" : "-translate-x-60"
         )}
       >
         <div className="flex h-16 items-center border-b px-4 bg-primary/5">
-          <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">Exam Management</h1>
+          <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
+            Exam Management
+          </h1>
         </div>
 
         <div className="px-3 py-4">
@@ -176,7 +188,7 @@ const Sidebar = () => {
           ))}
         </div>
       </aside>
-      
+
       {/* Show tab indicator when sidebar is hidden */}
       {!isOpen && !isHovering && <SidebarTrigger />}
     </div>

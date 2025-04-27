@@ -70,7 +70,6 @@ const Revaluation = () => {
       const mappedRequests: RevaluationRequest[] = response.data.map(
         (req: any) => ({
           id: req.requestID.toString(),
-          subject: `Student ID: ${req.studentId}`,
           date: new Date(req.requestDate).toLocaleDateString(),
           status: req.status,
           result: req.result,
