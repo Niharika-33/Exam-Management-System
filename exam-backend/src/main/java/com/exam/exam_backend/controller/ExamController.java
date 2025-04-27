@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/exams")
+@RequestMapping("/exams")
 public class ExamController {
 
     @Autowired
@@ -67,6 +67,7 @@ public class ExamController {
             }
 
             exam.setExamType("End Sem");
+            exam.setTestDate(null);
             examService.publishExamDetails(exam);
             return ResponseEntity.ok("End Sem exam details published successfully!");
         } catch (Exception e) {
