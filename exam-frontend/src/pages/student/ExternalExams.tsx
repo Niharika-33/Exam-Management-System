@@ -98,7 +98,6 @@ const ExternalExams = () => {
       setDescription("");
     } catch (error) {
       toast({
-  
         description: "Failed to report issue. Please try again later.",
         variant: "destructive",
       });
@@ -135,7 +134,6 @@ const ExternalExams = () => {
     },
   ];
 
-  
   return (
     <>
       <Helmet>
@@ -268,7 +266,6 @@ const ExternalExams = () => {
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList>
             <TabsTrigger value="upcoming">Upcoming Exams</TabsTrigger>
-            
           </TabsList>
 
           <TabsContent value="upcoming">
@@ -299,8 +296,6 @@ const ExternalExams = () => {
               </TableBody>
             </Table>
           </TabsContent>
-
-          
         </Tabs>
       </div>
     </>
@@ -308,4 +303,3 @@ const ExternalExams = () => {
 };
 
 export default ExternalExams;
-

@@ -30,12 +30,12 @@ export const useInternalExams = () => {
 
   const getExamList = () => {
     if (activeTab === "mid-semester") {
-      return activeSubTab === "upcoming" 
-        ? midSemesterExams.upcoming 
+      return activeSubTab === "upcoming"
+        ? midSemesterExams.upcoming
         : midSemesterExams.completed;
     } else {
-      return activeSubTab === "upcoming" 
-        ? classTests.upcoming 
+      return activeSubTab === "upcoming"
+        ? classTests.upcoming
         : classTests.completed;
     }
   };
@@ -48,7 +48,7 @@ export const useInternalExams = () => {
     handleViewSyllabus,
     handleViewDetails,
     handleViewAnswerKey,
-    getExamList
+    getExamList,
   };
 };
 // import { useState } from "react";
@@ -90,12 +90,12 @@ export const useInternalExams = () => {
 
 //   const getExamList = () => {
 //     if (activeTab === "mid-semester") {
-//       return activeSubTab === "upcoming" 
-//         ? midSemesterExams.upcoming 
+//       return activeSubTab === "upcoming"
+//         ? midSemesterExams.upcoming
 //         : midSemesterExams.completed;
 //     } else {
-//       return activeSubTab === "upcoming" 
-//         ? classTests.upcoming 
+//       return activeSubTab === "upcoming"
+//         ? classTests.upcoming
 //         : classTests.completed;
 //     }
 //   };

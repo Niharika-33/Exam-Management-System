@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -39,15 +38,15 @@ const queryClient = new QueryClient();
 // Role-based route protection component
 const ProtectedRoute = ({ element, allowedRoles }) => {
   const { user } = useAuth();
-  
+
   if (!user) {
     return <Navigate to="/login" replace />;
   }
-  
+
   if (!allowedRoles.includes(user.role)) {
     return <Navigate to="/dashboard" replace />;
   }
-  
+
   return <>{element}</>;
 };
 
@@ -56,60 +55,120 @@ const AppRoutes = () => {
     <Routes>
       {/* Public routes */}
       <Route path="/login" element={<Login />} />
-      
+
       {/* Protected routes */}
       <Route element={<Layout requireAuth={true} />}>
         <Route path="/dashboard" element={<Dashboard />} />
-        
+
         {/* Student routes */}
-        <Route path="/internals" element={
-          <ProtectedRoute element={<InternalExams />} allowedRoles={["student"]} />
-        } />
-        <Route path="/externals" element={
-          <ProtectedRoute element={<ExternalExams />} allowedRoles={["student"]} />
-        } />
-        <Route path="/results" element={
-          <ProtectedRoute element={<Results />} allowedRoles={["student"]} />
-        } />
-        <Route path="/revaluation" element={
-          <ProtectedRoute element={<Revaluation />} allowedRoles={["student"]} />
-        } />
-        
+        <Route
+          path="/internals"
+          element={
+            <ProtectedRoute
+              element={<InternalExams />}
+              allowedRoles={["student"]}
+            />
+          }
+        />
+        <Route
+          path="/externals"
+          element={
+            <ProtectedRoute
+              element={<ExternalExams />}
+              allowedRoles={["student"]}
+            />
+          }
+        />
+        <Route
+          path="/results"
+          element={
+            <ProtectedRoute element={<Results />} allowedRoles={["student"]} />
+          }
+        />
+        <Route
+          path="/revaluation"
+          element={
+            <ProtectedRoute
+              element={<Revaluation />}
+              allowedRoles={["student"]}
+            />
+          }
+        />
+
         {/* Faculty routes */}
-        <Route path="/publish-syllabus" element={
-          <ProtectedRoute element={<PublishSyllabus />} allowedRoles={["faculty"]} />
-        } />
-        <Route path="/clas-tests" element={
-          <ProtectedRoute element={<ClassTests />} allowedRoles={["faculty"]} />
-        } />
-        <Route path="/publish-results" element={
-          <ProtectedRoute element={<PublishResults />} allowedRoles={["faculty"]} />
-        } />
-        
+        <Route
+          path="/publish-syllabus"
+          element={
+            <ProtectedRoute
+              element={<PublishSyllabus />}
+              allowedRoles={["faculty"]}
+            />
+          }
+        />
+        <Route
+          path="/clas-tests"
+          element={
+            <ProtectedRoute
+              element={<ClassTests />}
+              allowedRoles={["faculty"]}
+            />
+          }
+        />
+        <Route
+          path="/publish-results"
+          element={
+            <ProtectedRoute
+              element={<PublishResults />}
+              allowedRoles={["faculty"]}
+            />
+          }
+        />
+
         {/* Admin routes */}
-        <Route path="/date-sheet" element={
-          <ProtectedRoute element={<DateSheet />} allowedRoles={["admin"]} />
-        } />
-        <Route path="/seating" element={
-          <ProtectedRoute element={<Seating />} allowedRoles={["admin"]} />
-        } />
-        <Route path="/published-results" element={
-          <ProtectedRoute element={<PublishedResults />} allowedRoles={["admin"]} />
-        } />
-        <Route path="/issues" element={
-          <ProtectedRoute element={<Issues />} allowedRoles={["admin"]} />
-        } />
-        <Route path="/revaluation-requests" element={
-          <ProtectedRoute element={<RevaluationRequests />} allowedRoles={["admin"]} />
-        } />
+        <Route
+          path="/date-sheet"
+          element={
+            <ProtectedRoute element={<DateSheet />} allowedRoles={["admin"]} />
+          }
+        />
+        <Route
+          path="/seating"
+          element={
+            <ProtectedRoute element={<Seating />} allowedRoles={["admin"]} />
+          }
+        />
+        <Route
+          path="/published-results"
+          element={
+            <ProtectedRoute
+              element={<PublishedResults />}
+              allowedRoles={["admin"]}
+            />
+          }
+        />
+        <Route
+          path="/issues"
+          element={
+            <ProtectedRoute element={<Issues />} allowedRoles={["admin"]} />
+          }
+        />
+        <Route
+          path="/revaluation-requests"
+          element={
+            <ProtectedRoute
+              element={<RevaluationRequests />}
+              allowedRoles={["admin"]}
+            />
+          }
+        />
         {/* <Route path="/settings" element={
           <ProtectedRoute element={<Settings />} allowedRoles={["admin"]} />
         } /> */}
       </Route>
-      
+
       {/* Redirect from root to dashboard or login */}
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
-      
+
       {/* Catch-all route */}
       <Route path="*" element={<NotFound />} />
     </Routes>
