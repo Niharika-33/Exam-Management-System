@@ -1,7 +1,10 @@
 package com.exam.exam_backend.repository;
 
-import com.exam.exam_backend.entity.Result;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ResultRepository extends JpaRepository<Result, String> {
+import com.exam.exam_backend.entity.Result;
+
+@Repository
+public interface ResultRepository extends JpaRepository<Result, Long> {
 }

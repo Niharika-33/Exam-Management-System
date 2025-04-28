@@ -26,5 +26,11 @@ public class WebConfig implements WebMvcConfigurer {
         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
         .allowedHeaders("*")
         .allowCredentials(true);
+
+        registry.addMapping("/result/**")  // allow all endpoints
+        .allowedOrigins("http://localhost:5173")
+        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        .allowedHeaders("*")
+        .allowCredentials(true);
     }
 }
