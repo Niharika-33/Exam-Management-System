@@ -9,13 +9,10 @@ const InternalExams = () => {
   const {
     activeTab,
     setActiveTab,
-    activeSubTab,
-    setActiveSubTab,
-    handleViewSyllabus,
+    getExamList,
     handleViewDetails,
     handleViewResults,
     handleViewAnswerKey,
-    getExamList,
   } = useInternalExams();
 
   return (
@@ -32,49 +29,40 @@ const InternalExams = () => {
           </p>
         </div>
 
-        <Tabs defaultValue="mid-semester" value={activeTab} onValueChange={setActiveTab}>
+        <Tabs value={activeTab} onValueChange={setActiveTab} defaultValue="mid-semester">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="mid-semester">Mid-Semester Exams</TabsTrigger>
             <TabsTrigger value="class-test">Class Tests (CLAS)</TabsTrigger>
           </TabsList>
 
+          {/* Mid-Semester */}
           <TabsContent value="mid-semester" className="space-y-4 mt-6">
             <QuickActionCards
               examType="mid-semester"
-              onViewSyllabus={handleViewSyllabus}
               onViewDetails={handleViewDetails}
               onViewResults={handleViewResults}
+              showAnswerKey={false}
             />
-
             <ExamList
               title="Mid-Semester Examinations"
-              description="View your upcoming and past mid-semester examinations"
+              description="View your mid-semester examinations"
               examList={getExamList()}
-              activeSubTab={activeSubTab}
-              onSubTabChange={setActiveSubTab}
-              onViewSyllabus={handleViewSyllabus}
-              onViewResults={handleViewResults}
             />
           </TabsContent>
 
+          {/* Class-Test */}
           <TabsContent value="class-test" className="space-y-4 mt-6">
             <QuickActionCards
               examType="class-test"
-              onViewSyllabus={handleViewSyllabus}
               onViewDetails={handleViewDetails}
-              onViewResults={handleViewResults}
-            />
-
-            <ExamList
-              title="CLAS Test Schedule"
-              description="View your upcoming and past class tests"
-              examList={getExamList()}
-              activeSubTab={activeSubTab}
-              onSubTabChange={setActiveSubTab}
-              onViewSyllabus={handleViewSyllabus}
               onViewResults={handleViewResults}
               onViewAnswerKey={handleViewAnswerKey}
               showAnswerKey={true}
+            />
+            <ExamList
+              title="CLAS Test Schedule"
+              description="View your class tests"
+              examList={getExamList()}
             />
           </TabsContent>
         </Tabs>

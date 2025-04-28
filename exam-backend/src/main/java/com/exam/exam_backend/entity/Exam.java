@@ -20,9 +20,9 @@ public class Exam {
     // Constructors
     public Exam() {}
 
-    public Exam(String examType, String subject, String syllabusDetails, Integer totalMarks, String testDate) {
+    public Exam(String examType, String subjectcode, String syllabusDetails, Integer totalMarks, String testDate) {
         this.examType = examType;
-        this.subjectcode = subject;
+        this.subjectcode = subjectcode;
         this.syllabusDetails = syllabusDetails;
         this.totalMarks = totalMarks;
         this.testDate = testDate;
