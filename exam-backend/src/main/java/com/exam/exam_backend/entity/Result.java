@@ -1,24 +1,95 @@
 package com.exam.exam_backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import java.util.Date;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
 @Entity
+@Table(name = "result")
 public class Result {
 
     @Id
-    private String resultID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long resultid;
+
     private String filePath;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date uploadDate;
 
-    public Result() {}
+    private String additionalInfo;
 
-    public Result(String resultID, String filePath, Date uploadDate) {
-        this.resultID = resultID;
+    private String examType;
+
+    private String subject;
+
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] fileData;
+
+    // Getters and Setters
+
+    public Long getResultid() {
+        return resultid;
+    }
+
+    public void setResultid(Long resultid) {
+        this.resultid = resultid;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(Date uploadDate) {
         this.uploadDate = uploadDate;
     }
 
-    // Getters and Setters
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
+    public String getExamType() {
+        return examType;
+    }
+
+    public void setExamType(String examType) {
+        this.examType = examType;
+    }
+
+    public byte[] getFileData() {
+        return fileData;
+    }
+
+    public void setFileData(byte[] fileData) {
+        this.fileData = fileData;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 }
