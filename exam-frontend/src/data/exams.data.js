@@ -1,4 +1,3 @@
-
 // Sample data for mid-semester exams
 export const midSemesterExams = {
   upcoming: [
@@ -9,7 +8,7 @@ export const midSemesterExams = {
       date: "Oct 15, 2023",
       time: "09:00 AM",
       venue: "Block A - Room 101",
-      status: "Upcoming"
+      status: "Upcoming",
     },
     {
       id: 2,
@@ -18,8 +17,8 @@ export const midSemesterExams = {
       date: "Oct 18, 2023",
       time: "02:00 PM",
       venue: "Block B - Room 205",
-      status: "Upcoming"
-    }
+      status: "Upcoming",
+    },
   ],
   completed: [
     {
@@ -30,7 +29,7 @@ export const midSemesterExams = {
       time: "09:00 AM",
       venue: "Block A - Room 101",
       status: "Completed",
-      result: "82/100"
+      result: "82/100",
     },
     {
       id: 4,
@@ -40,9 +39,9 @@ export const midSemesterExams = {
       time: "02:00 PM",
       venue: "Block B - Room 205",
       status: "Completed",
-      result: "75/100"
-    }
-  ]
+      result: "75/100",
+    },
+  ],
 };
 
 // Sample data for class tests
@@ -55,7 +54,7 @@ export const classTests = {
       date: "Oct 22, 2023",
       time: "09:00 AM",
       venue: "Block A - Room 101",
-      status: "Upcoming"
+      status: "Upcoming",
     },
     {
       id: 2,
@@ -64,8 +63,8 @@ export const classTests = {
       date: "Oct 25, 2023",
       time: "02:00 PM",
       venue: "Block B - Room 205",
-      status: "Upcoming"
-    }
+      status: "Upcoming",
+    },
   ],
   completed: [
     {
@@ -76,7 +75,7 @@ export const classTests = {
       time: "09:00 AM",
       venue: "Block A - Room 101",
       status: "Completed",
-      result: "18/20"
+      result: "18/20",
     },
     {
       id: 4,
@@ -86,7 +85,7 @@ export const classTests = {
       time: "02:00 PM",
       venue: "Block B - Room 205",
       status: "Completed",
-      result: "16/20"
-    }
-  ]
+      result: "16/20",
+    },
+  ],
 };

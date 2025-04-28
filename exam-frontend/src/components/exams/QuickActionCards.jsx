@@ -10,8 +10,8 @@ const QuickActionCards = ({
 }) => {
   if (examType === "mid-semester") {
     return (
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-        <Card>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
+        {/* <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">View Syllabus</CardTitle>
             <BookOpen className="h-4 w-4 text-muted-foreground" />
@@ -29,7 +29,7 @@ const QuickActionCards = ({
               <Eye className="mr-1 h-3 w-3" /> View Syllabus
             </Button>
           </CardContent>
-        </Card>
+        </Card> */}
         
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

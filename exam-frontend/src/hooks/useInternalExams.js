@@ -4,27 +4,39 @@ import { useToast } from "@/hooks/use-toast";
 export const useInternalExams = () => {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("mid-semester");
-  const [activeSubTab, setActiveSubTab] = useState("upcoming");
   const [exams, setExams] = useState({
-    "mid-semester": { upcoming: [], completed: [] },
-    "class-test": { upcoming: [], completed: [] }
+    "mid-semester": [],
+    "class-test": []
   });
 
-  // Placeholder function to fetch exams (replace with API call)
   const fetchExams = async () => {
     try {
-      // Example API call - replace with your real API
-      // const response = await fetch("/api/exams");
-      // const data = await response.json();
-      // setExams(data);
-
-      // Temporary: Empty dynamic structure for now
-      setExams({
-        "mid-semester": { upcoming: [], completed: [] },
-        "class-test": { upcoming: [], completed: [] }
+      const res = await fetch("http://localhost:8080/exams/list", {
+        headers: { "Content-Type": "application/json" },
       });
-    } catch (error) {
-      console.error("Failed to fetch exams", error);
+      const examList = await res.json();
+
+      // categorize by type only
+      const categorized = { "mid-semester": [], "class-test": [] };
+
+      examList.forEach((exam) => {
+        const normalized = {
+          ...exam,
+          subjectCode: exam.subject,        // backend “subject”
+          syllabusDetails: exam.syllabusDetails,
+          totalMarks: exam.totalMarks,
+        };
+        if (exam.examType === "Mid") {
+          categorized["mid-semester"].push(normalized);
+        } else if (exam.examType === "CLA") {
+          categorized["class-test"].push(normalized);
+        }
+      });
+
+      setExams(categorized);
+    } catch (err) {
+      console.error("Failed to fetch exams", err);
+      toast({ title: "Error", description: "Could not load exams." });
     }
   };
 
@@ -32,47 +44,23 @@ export const useInternalExams = () => {
     fetchExams();
   }, []);
 
-  const handleViewSyllabus = (subject) => {
-    toast({
-      title: "Viewing Syllabus",
-      description: `Opening syllabus for ${subject}`,
-    });
-  };
+  // Action handlers (toasts only)
+  const handleViewDetails = (subject) =>
+    toast({ title: "Exam Details", description: `Viewing details for ${subject}` });
+  const handleViewResults = (subject) =>
+    toast({ title: "Results", description: `Viewing results for ${subject}` });
+  const handleViewAnswerKey = (subject) =>
+    toast({ title: "Answer Key", description: `Viewing answer key for ${subject}` });
 
-  const handleViewDetails = (exam) => {
-    toast({
-      title: "Exam Details",
-      description: `Viewing details for ${exam}`,
-    });
-  };
-
-  const handleViewResults = (subject) => {
-    toast({
-      title: "Results",
-      description: `Viewing results for ${subject}`,
-    });
-  };
-
-  const handleViewAnswerKey = (subject) => {
-    toast({
-      title: "Answer Key",
-      description: `Viewing answer key for ${subject}`,
-    });
-  };
-
-  const getExamList = () => {
-    return exams[activeTab]?.[activeSubTab] || [];
-  };
+  // returns the list for the currently active main tab
+  const getExamList = () => exams[activeTab] || [];
 
   return {
     activeTab,
     setActiveTab,
-    activeSubTab,
-    setActiveSubTab,
-    handleViewSyllabus,
+    getExamList,
     handleViewDetails,
     handleViewResults,
     handleViewAnswerKey,
-    getExamList,
   };
 };

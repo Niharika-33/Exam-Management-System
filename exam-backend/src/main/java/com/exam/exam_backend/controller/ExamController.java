@@ -1,5 +1,6 @@
 package com.exam.exam_backend.controller;
 
+import java.util.List;
 import com.exam.exam_backend.entity.Exam;
 import com.exam.exam_backend.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,16 @@ public class ExamController {
             return ResponseEntity.ok("End Sem exam details published successfully!");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error publishing End Sem exam: " + e.getMessage());
+        }
+    }
+
+        @GetMapping("/list")
+        public ResponseEntity<List<Exam>> getAllExams() {
+        try {
+            List<Exam> exams = examService.getAllExams();
+            return ResponseEntity.ok(exams);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }
