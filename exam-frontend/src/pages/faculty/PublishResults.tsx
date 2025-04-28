@@ -1,7 +1,14 @@
 import React, { useState, useRef } from "react";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -11,12 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 
 const PublishResults = () => {
@@ -29,7 +31,7 @@ const PublishResults = () => {
   const fileInputMidRef = useRef<HTMLInputElement>(null);
   const fileInputClasRef = useRef<HTMLInputElement>(null);
 
-  const handlePublishMidSemesterResults = () => {
+  const handlePublishMidSemesterResults = async () => {
     if (!subject || !semester || !file) {
       toast({
         title: "Missing Fields",
@@ -39,11 +41,39 @@ const PublishResults = () => {
       return;
     }
 
-    toast({
-      title: "Results Published",
-      description: `${subject} results for semester ${semester} have been published successfully.`,
-      variant: "success",
-    });
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("subject", subject);
+    formData.append("examType", "mid-semester");
+    formData.append("additionalInfo", semester);
+
+    try {
+      const response = await fetch("http://localhost:8080/result/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Results Published",
+          description: `${subject} results for semester ${semester} have been published successfully.`,
+          variant: "success",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to publish results",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Error",
+        description: "Something went wrong",
+        variant: "destructive",
+      });
+    }
 
     setSubject("");
     setSemester("");
@@ -53,7 +83,7 @@ const PublishResults = () => {
     }
   };
 
-  const handlePublishClassTestResults = () => {
+  const handlePublishClassTestResults = async () => {
     if (!subject || !testDate || !file) {
       toast({
         title: "Missing Fields",
@@ -63,11 +93,39 @@ const PublishResults = () => {
       return;
     }
 
-    toast({
-      title: "Results Published",
-      description: `${subject} class test results for ${testDate} have been published successfully.`,
-      variant: "success",
-    });
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("subject", subject);
+    formData.append("examType", "class-test");
+    formData.append("additionalInfo", testDate);
+
+    try {
+      const response = await fetch("http://localhost:8080/result/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Results Published",
+          description: `${subject} class test results for ${testDate} have been published successfully.`,
+          variant: "success",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to publish results",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Error",
+        description: "Something went wrong",
+        variant: "destructive",
+      });
+    }
 
     setSubject("");
     setTestDate("");
@@ -109,9 +167,15 @@ const PublishResults = () => {
                       <SelectValue placeholder="Select a subject" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="computer-networks">Computer Networks</SelectItem>
-                      <SelectItem value="data-structures">Data Structures</SelectItem>
-                      <SelectItem value="database-systems">Database Systems</SelectItem>
+                      <SelectItem value="computer-networks">
+                        Computer Networks
+                      </SelectItem>
+                      <SelectItem value="data-structures">
+                        Data Structures
+                      </SelectItem>
+                      <SelectItem value="database-systems">
+                        Database Systems
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -148,7 +212,10 @@ const PublishResults = () => {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full" onClick={handlePublishMidSemesterResults}>
+                <Button
+                  className="w-full"
+                  onClick={handlePublishMidSemesterResults}
+                >
                   Publish Results
                 </Button>
               </CardFooter>
@@ -172,9 +239,15 @@ const PublishResults = () => {
                       <SelectValue placeholder="Select a subject" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="computer-networks">Computer Networks</SelectItem>
-                      <SelectItem value="data-structures">Data Structures</SelectItem>
-                      <SelectItem value="database-systems">Database Systems</SelectItem>
+                      <SelectItem value="computer-networks">
+                        Computer Networks
+                      </SelectItem>
+                      <SelectItem value="data-structures">
+                        Data Structures
+                      </SelectItem>
+                      <SelectItem value="database-systems">
+                        Database Systems
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -205,7 +278,10 @@ const PublishResults = () => {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full" onClick={handlePublishClassTestResults}>
+                <Button
+                  className="w-full"
+                  onClick={handlePublishClassTestResults}
+                >
                   Publish Results
                 </Button>
               </CardFooter>
